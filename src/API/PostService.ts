@@ -16,4 +16,23 @@ export default class PostService {
       console.log(error);
     }
   }
+  static async createTreeNode(
+    treeName: string,
+    parentNodeId: number,
+    nodeName: string
+  ) {
+    const newNodeUrl = this.baseUrl + "api.user.tree.node.create";
+    try {
+      axios.get(newNodeUrl, {
+        params: {
+          treeName: treeName,
+          parentNodeId: parentNodeId,
+          nodeName: nodeName,
+        },
+      });
+      return true;
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }
