@@ -1,32 +1,20 @@
-import React, { useEffect } from "react";
-import logo from "./logo.svg";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import PostService from "./API/PostService";
+import { Tree } from "./Types/Tree.type";
 
 function App() {
+  const [tree, setTree] = useState<Tree>();
+
   useEffect(() => {
-    const response = PostService.getTree("test__tree");
-    response.then((response) => console.log(response));
+    const treeData = PostService.getTree("test__tree");
+    treeData.then((treeData) => {
+      setTree(treeData);
+      console.log(treeData);
+    });
   }, []);
 
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  return <div className="App">{tree && tree.id}</div>;
 }
 
 export default App;
