@@ -6,6 +6,7 @@ import { Tree } from "./Types/Tree.type";
 function App() {
   const [tree, setTree] = useState<Tree>();
   const [newNodeName, setNewNodeName] = useState("");
+  const [deleteNodeID, setDeleteNodeID] = useState(1);
   const [isCreated, setIsCreated] = useState(false);
 
   useEffect(() => {
@@ -20,6 +21,14 @@ function App() {
   return (
     <div className="App">
       ID: {tree && tree.id}
+      <input
+        type="text"
+        name="newNode"
+        id=""
+        value={newNodeName}
+        onChange={(e) => setNewNodeName(e.target.value)}
+        placeholder="Add new node"
+      />
       <button
         onClick={() => {
           PostService.createTreeNode("test__tree", 17298, newNodeName);
@@ -27,17 +36,28 @@ function App() {
           setNewNodeName("");
         }}
       >
-        add node
+        add node {newNodeName}
       </button>
-      {newNodeName}
       <input
-        type="text"
-        name="newNode"
+        type="number"
+        name="deleteNode"
         id=""
-        value={newNodeName}
-        onChange={(e) => setNewNodeName(e.target.value)}
-        autoComplete="false"
+        value={deleteNodeID}
+        onChange={(e) => setDeleteNodeID(+e.target.value)}
+        placeholder="Enter delete node ID"
       />
+      <button
+        onClick={() => {
+          const response = PostService.deleteTreeNode(
+            "test__tree",
+            deleteNodeID
+          );
+          console.log(response);
+          setDeleteNodeID(0);
+        }}
+      >
+        Delete node with ID {deleteNodeID}
+      </button>
     </div>
   );
 }

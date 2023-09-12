@@ -35,4 +35,19 @@ export default class PostService {
       console.log(error);
     }
   }
+  static async deleteTreeNode(treeName: string, nodeId: number) {
+    const deleteNodeUrl = this.baseUrl + "api.user.tree.node.delete";
+    try {
+      axios.get(deleteNodeUrl, {
+        params: {
+          treeName: treeName,
+          nodeId: nodeId,
+        },
+      });
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
 }
