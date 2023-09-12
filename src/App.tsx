@@ -8,17 +8,18 @@ function App() {
   const [newNodeName, setNewNodeName] = useState("");
   const [changedNodeName, setChangedNodeName] = useState("");
   const [deleteNodeID, setDeleteNodeID] = useState(1);
-  const [renameNodeID, setRenameNodeID] = useState(17338);
-  const [isCreated, setIsCreated] = useState(false);
+  const [renameNodeID, setRenameNodeID] = useState(17358);
 
-  useEffect(() => {
+  async function fetchTree() {
     const treeData = PostService.getTree("test__tree");
     treeData.then((treeData) => {
       setTree(treeData);
-      setIsCreated(false);
-      console.log(treeData);
     });
-  }, [isCreated]);
+  }
+
+  useEffect(() => {
+    fetchTree();
+  }, []);
 
   return (
     <div className="App">
@@ -33,9 +34,12 @@ function App() {
       />
       <button
         onClick={() => {
-          PostService.createTreeNode("test__tree", 17298, newNodeName);
-          setIsCreated(true);
-          setNewNodeName("");
+          PostService.createTreeNode("test__tree", 17298, newNodeName).then(
+            () => {
+              fetchTree();
+              setNewNodeName("");
+            }
+          );
         }}
       >
         add node {newNodeName}
@@ -50,12 +54,10 @@ function App() {
       />
       <button
         onClick={() => {
-          const response = PostService.deleteTreeNode(
-            "test__tree",
-            deleteNodeID
-          );
-          console.log(response);
-          setDeleteNodeID(0);
+          PostService.deleteTreeNode("test__tree", deleteNodeID).then(() => {
+            fetchTree();
+            setDeleteNodeID(0);
+          });
         }}
       >
         Delete node with ID {deleteNodeID}
@@ -70,13 +72,14 @@ function App() {
       />
       <button
         onClick={() => {
-          const response = PostService.renameTreeNode(
+          PostService.renameTreeNode(
             "test__tree",
             renameNodeID,
             changedNodeName
-          );
-          console.log(response);
-          setChangedNodeName("");
+          ).then(() => {
+            fetchTree();
+            setChangedNodeName("");
+          });
         }}
       >
         Rename node with ID {renameNodeID}

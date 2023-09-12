@@ -11,6 +11,7 @@ export default class PostService {
           treeName: treeName,
         },
       });
+      console.log("Get tree", response.data);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -23,14 +24,15 @@ export default class PostService {
   ) {
     const newNodeUrl = this.baseUrl + "api.user.tree.node.create";
     try {
-      axios.get(newNodeUrl, {
+      const response = await axios.get(newNodeUrl, {
         params: {
           treeName: treeName,
           parentNodeId: parentNodeId,
           nodeName: nodeName,
         },
       });
-      return true;
+      console.log("Create node");
+      return response;
     } catch (error) {
       console.log(error);
     }
@@ -38,13 +40,14 @@ export default class PostService {
   static async deleteTreeNode(treeName: string, nodeId: number) {
     const deleteNodeUrl = this.baseUrl + "api.user.tree.node.delete";
     try {
-      axios.get(deleteNodeUrl, {
+      const response = await axios.get(deleteNodeUrl, {
         params: {
           treeName: treeName,
           nodeId: nodeId,
         },
       });
-      return true;
+      console.log("deleteTreeNode");
+      return response;
     } catch (error) {
       console.log(error);
       return false;
@@ -57,14 +60,15 @@ export default class PostService {
   ) {
     const newNodeUrl = this.baseUrl + "api.user.tree.node.rename";
     try {
-      axios.get(newNodeUrl, {
+      const response = await axios.get(newNodeUrl, {
         params: {
           treeName: treeName,
           nodeId: nodeId,
           newNodeName: newNodeName,
         },
       });
-      return true;
+      console.log("renameTreeNode");
+      return response;
     } catch (error) {
       console.log(error);
     }
