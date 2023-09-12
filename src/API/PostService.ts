@@ -50,4 +50,23 @@ export default class PostService {
       return false;
     }
   }
+  static async renameTreeNode(
+    treeName: string,
+    nodeId: number,
+    newNodeName: string
+  ) {
+    const newNodeUrl = this.baseUrl + "api.user.tree.node.rename";
+    try {
+      axios.get(newNodeUrl, {
+        params: {
+          treeName: treeName,
+          nodeId: nodeId,
+          newNodeName: newNodeName,
+        },
+      });
+      return true;
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }

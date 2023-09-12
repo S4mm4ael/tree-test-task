@@ -6,7 +6,9 @@ import { Tree } from "./Types/Tree.type";
 function App() {
   const [tree, setTree] = useState<Tree>();
   const [newNodeName, setNewNodeName] = useState("");
+  const [changedNodeName, setChangedNodeName] = useState("");
   const [deleteNodeID, setDeleteNodeID] = useState(1);
+  const [renameNodeID, setRenameNodeID] = useState(17338);
   const [isCreated, setIsCreated] = useState(false);
 
   useEffect(() => {
@@ -57,6 +59,27 @@ function App() {
         }}
       >
         Delete node with ID {deleteNodeID}
+      </button>
+      <input
+        type="text"
+        name="changeNode"
+        id=""
+        value={changedNodeName}
+        onChange={(e) => setChangedNodeName(e.target.value)}
+        placeholder="Enter new name"
+      />
+      <button
+        onClick={() => {
+          const response = PostService.renameTreeNode(
+            "test__tree",
+            renameNodeID,
+            changedNodeName
+          );
+          console.log(response);
+          setChangedNodeName("");
+        }}
+      >
+        Rename node with ID {renameNodeID}
       </button>
     </div>
   );
