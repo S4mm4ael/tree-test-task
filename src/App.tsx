@@ -10,7 +10,6 @@ function App() {
   const [changedNodeName, setChangedNodeName] = useState("");
   const [deleteNodeID, setDeleteNodeID] = useState(1);
   const [renameNodeID, setRenameNodeID] = useState(17358);
-  const [showTree, setShowTree] = useState(false);
 
   async function fetchTree() {
     const treeData = PostService.getTree("test__tree");
@@ -19,26 +18,15 @@ function App() {
     });
   }
 
-  function handleTreeShowing() {
-    const treeStatus = showTree ? false : true;
-    setShowTree(treeStatus);
-  }
-
   function renderTree() {
     if (tree?.children) {
       return (
-        <>
-          <h1 onClick={handleTreeShowing}>{tree.name}</h1>
-          {showTree &&
-            tree.children.map((item) => (
-              <TreeItem
-                key={item.id}
-                id={item.id}
-                name={item.name}
-                children={item.children}
-              />
-            ))}
-        </>
+        <TreeItem
+          key={tree.id}
+          id={tree.id}
+          name={tree.name}
+          children={tree.children}
+        />
       );
     }
     return <span>There is no Tree</span>;
@@ -60,7 +48,7 @@ function App() {
       />
       <button
         onClick={() => {
-          PostService.createTreeNode("test__tree", 17298, newNodeName).then(
+          PostService.createTreeNode("test__tree", 17441, newNodeName).then(
             () => {
               fetchTree();
               setNewNodeName("");
