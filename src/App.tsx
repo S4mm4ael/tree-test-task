@@ -10,6 +10,7 @@ function App() {
   const [changedNodeName, setChangedNodeName] = useState("");
   const [deleteNodeID, setDeleteNodeID] = useState(1);
   const [renameNodeID, setRenameNodeID] = useState(17358);
+  const [showTree, setShowTree] = useState(false);
 
   async function fetchTree() {
     const treeData = PostService.getTree("test__tree");
@@ -18,16 +19,27 @@ function App() {
     });
   }
 
+  function handleTreeShowing() {
+    const treeStatus = showTree ? false : true;
+    setShowTree(treeStatus);
+  }
+
   function renderTree() {
     if (tree?.children) {
-      return tree.children.map((item) => (
-        <TreeItem
-          key={item.id}
-          id={item.id}
-          name={item.name}
-          children={item.children}
-        />
-      ));
+      return (
+        <>
+          <h1 onClick={handleTreeShowing}>{tree.name}</h1>
+          {showTree &&
+            tree.children.map((item) => (
+              <TreeItem
+                key={item.id}
+                id={item.id}
+                name={item.name}
+                children={item.children}
+              />
+            ))}
+        </>
+      );
     }
     return <span>There is no Tree</span>;
   }
@@ -98,7 +110,7 @@ function App() {
       >
         Rename node with ID {renameNodeID}
       </button>
-      {renderTree()}
+      <div className="App__treeWrapper">{renderTree()}</div>
     </div>
   );
 }

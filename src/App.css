@@ -6,3 +6,8 @@
   width: 800px;
   margin: 0 auto;
 }
+
+.App__treeWrapper {
+  display: flex;
+  flex-direction: column;
+}
