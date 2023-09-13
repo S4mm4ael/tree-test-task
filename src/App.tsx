@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import PostService from "./API/PostService";
-import { Tree } from "./Types/Tree.type";
+import { TreeItemType } from "./Types/TreeItemType.type";
+import { TreeItem } from "./components/TreeItem";
 
 function App() {
-  const [tree, setTree] = useState<Tree>();
+  const [tree, setTree] = useState<TreeItemType>();
   const [newNodeName, setNewNodeName] = useState("");
   const [changedNodeName, setChangedNodeName] = useState("");
   const [deleteNodeID, setDeleteNodeID] = useState(1);
@@ -17,13 +18,26 @@ function App() {
     });
   }
 
+  function renderTree() {
+    if (tree?.children) {
+      return tree.children.map((item) => (
+        <TreeItem
+          key={item.id}
+          id={item.id}
+          name={item.name}
+          children={item.children}
+        />
+      ));
+    }
+    return <span>There is no Tree</span>;
+  }
+
   useEffect(() => {
     fetchTree();
   }, []);
 
   return (
     <div className="App">
-      ID: {tree && tree.id}
       <input
         type="text"
         name="newNode"
@@ -84,6 +98,7 @@ function App() {
       >
         Rename node with ID {renameNodeID}
       </button>
+      {renderTree()}
     </div>
   );
 }
