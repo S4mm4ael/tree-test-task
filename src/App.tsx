@@ -1,8 +1,11 @@
-import { useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import "./App.css";
 import { TreeItemType } from "./Types/TreeItemType.type";
 import { TreeItem } from "./components/TreeItem";
 import { createNode, deleteNode, fetchTree, renameNode } from "./utils/utils";
+import { Modal } from "./components/UI/Modal/";
+
+//const GlobalContext = createContext({ showModal: false });
 
 function App() {
   const [tree, setTree] = useState<TreeItemType>();
@@ -10,6 +13,8 @@ function App() {
   const [changedNodeName, setChangedNodeName] = useState("");
   const [deleteNodeID, setDeleteNodeID] = useState(1);
   const [renameNodeID, setRenameNodeID] = useState(17340);
+  const [showModal, setShowModal] = useState(false);
+  const [modalType, setModalType] = useState("");
 
   function renderTree() {
     if (tree?.children) {
@@ -19,12 +24,16 @@ function App() {
           id={tree.id}
           name={tree.name}
           children={tree.children}
+          modalHandler={modalHandler}
         />
       );
     }
     return <span>There is no Tree</span>;
   }
-
+  function modalHandler(type: string) {
+    setModalType(type);
+    setShowModal(true);
+  }
   useEffect(() => {
     const response = fetchTree("test__tree");
     response.then((data) => setTree(data));
@@ -32,6 +41,11 @@ function App() {
 
   return (
     <div className="App">
+      <Modal
+        visible={showModal}
+        setVisible={setShowModal}
+        modalType={modalType}
+      />
       <input
         type="text"
         name="newNode"
