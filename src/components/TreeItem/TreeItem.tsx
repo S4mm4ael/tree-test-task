@@ -9,12 +9,12 @@ export function TreeItem({ id, name, children, ...props }: TreeItemType) {
     const treeStatus = showTree ? false : true;
     setShowTree(treeStatus);
   }
+  function handleNodeAdding() {}
   return (
     <div className={styles.TreeItem}>
       <div className={styles.TreeItem__wrapper}>
-        <b>
-          Name:{name} ID: {id}
-        </b>
+        Name: <b>{name} </b>
+        ID: <b>{id}</b>
         <button onClick={handleTreeShowing}>Show</button>
       </div>
 
