@@ -1,20 +1,19 @@
-import { createContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import { TreeItemType } from "./Types/TreeItemType.type";
 import { TreeItem } from "./components/TreeItem";
-import { createNode, deleteNode, fetchTree, renameNode } from "./utils/utils";
+import { deleteNode, fetchTree, renameNode } from "./utils/utils";
 import { Modal } from "./components/UI/Modal/";
 
 //const GlobalContext = createContext({ showModal: false });
 
 function App() {
   const [tree, setTree] = useState<TreeItemType>();
-  const [newNodeName, setNewNodeName] = useState("");
   const [changedNodeName, setChangedNodeName] = useState("");
   const [deleteNodeID, setDeleteNodeID] = useState(1);
   const [renameNodeID, setRenameNodeID] = useState(17340);
   const [showModal, setShowModal] = useState(false);
-  const [modalType, setModalType] = useState("");
+  const [modalProps, setModalProps] = useState({ type: "add", id: 17298 });
 
   function renderTree() {
     if (tree?.children) {
@@ -30,40 +29,25 @@ function App() {
     }
     return <span>There is no Tree</span>;
   }
-  function modalHandler(type: string) {
-    setModalType(type);
+  function modalHandler(type: string, id: number) {
+    setModalProps({ type: type, id: id });
     setShowModal(true);
   }
   useEffect(() => {
-    const response = fetchTree("test__tree");
-    response.then((data) => setTree(data));
-  }, []);
+    if (showModal === false) {
+      const response = fetchTree("test__tree");
+      response.then((data) => setTree(data));
+    }
+  }, [showModal]);
 
   return (
     <div className="App">
       <Modal
         visible={showModal}
         setVisible={setShowModal}
-        modalType={modalType}
+        modalProps={modalProps}
+        fetchTree={fetchTree}
       />
-      <input
-        type="text"
-        name="newNode"
-        id=""
-        value={newNodeName}
-        onChange={(e) => setNewNodeName(e.target.value)}
-        placeholder="Add new node"
-      />
-      <button
-        onClick={() => {
-          createNode("test__tree", 17298, newNodeName)
-            .then(() => fetchTree("test__tree"))
-            .then((data) => setTree(data));
-          setNewNodeName("");
-        }}
-      >
-        add node {newNodeName}
-      </button>
       <input
         type="number"
         name="deleteNode"
