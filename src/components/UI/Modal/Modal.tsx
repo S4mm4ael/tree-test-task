@@ -1,3 +1,4 @@
+import { CreateNodeForm } from "../Forms";
 import styles from "./styles.module.css";
 
 export function Modal({
@@ -20,7 +21,20 @@ export function Modal({
         className={styles.ModalRegular__content}
         onClick={(e) => e.stopPropagation()}
       >
-        {modalType}
+        <div className={styles.ModalRegular__header}>
+          <h6>{modalType}</h6>
+        </div>
+        <div className={styles.ModalRegular__form}>
+          {modalType === "add" && <CreateNodeForm />}
+        </div>
+        <div className={styles.ModalRegular__footer}>
+          <button className={styles.ModalRegular__btn}>CANCEL</button>
+          <button
+            className={`${styles.ModalRegular__btn} ${styles.ModalRegular__btn_submit}`}
+          >
+            ADD
+          </button>
+        </div>
       </div>
     </div>
   );
