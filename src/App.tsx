@@ -1,11 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./App.css";
 import { TreeItemType } from "./Types/TreeItemType.type";
 import { TreeItem } from "./components/TreeItem";
 import { deleteNode, fetchTree, renameNode } from "./utils/utils";
-import { Modal } from "./components/UI/Modal/";
-
-//const GlobalContext = createContext({ showModal: false });
+import { Modal } from "./components/Modal/";
 
 function App() {
   const [tree, setTree] = useState<TreeItemType>();
@@ -13,7 +11,12 @@ function App() {
   const [deleteNodeID, setDeleteNodeID] = useState(1);
   const [renameNodeID, setRenameNodeID] = useState(17340);
   const [showModal, setShowModal] = useState(false);
-  const [modalProps, setModalProps] = useState({ type: "add", id: 17298 });
+  const [modalProps, setModalProps] = useState({
+    type: "add",
+    id: 17298,
+    currentName: "test__tree",
+  });
+  const initialRender = useRef(true);
 
   function renderTree() {
     if (tree?.children) {
@@ -29,10 +32,23 @@ function App() {
     }
     return <span>There is no Tree</span>;
   }
-  function modalHandler(type: string, id: number) {
-    setModalProps({ type: type, id: id });
+  function modalHandler(type: string, id: number, currentName: string) {
+    setModalProps({
+      type: type,
+      id: id,
+      currentName: currentName,
+    });
+    console.log(type, id, currentName);
     setShowModal(true);
   }
+  // useEffect(() => {
+  //   if (!initialRender.current) {
+  //     console.log(modalProps);
+  //     setShowModal(true);
+  //   } else {
+  //     initialRender.current = false;
+  //   }
+  // }, [modalProps]);
   useEffect(() => {
     if (showModal === false) {
       const response = fetchTree("test__tree");

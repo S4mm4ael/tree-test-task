@@ -68,6 +68,7 @@ export default class PostService {
         },
       });
       console.log("renameTreeNode");
+      console.log("test__tree", nodeId, newNodeName);
       return response;
     } catch (error) {
       console.log(error);
