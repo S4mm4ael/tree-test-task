@@ -1,0 +1,12 @@
+.Form__input {
+  display: block;
+  padding: 18.5px 14px;
+  width: 472px;
+  border-radius: 5px;
+  border: 1px solid gainsboro;
+  font-size: 16px;
+}
+
+.Form__input:hover {
+  border: 1px solid black;
+}

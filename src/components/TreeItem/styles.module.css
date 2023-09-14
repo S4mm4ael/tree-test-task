@@ -1,0 +1,19 @@
+.TreeItem {
+  display: block;
+  text-align: left;
+}
+
+.TreeItem__wrapper {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-start
+}
+
+.TreeItem button {
+  cursor: pointer;
+}
+
+.TreeItem__children {
+  margin-left: 20px;
+}

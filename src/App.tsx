@@ -1,24 +1,90 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+import "./App.css";
+import { TreeItemType } from "./Types/TreeItemType.type";
+import { TreeItem } from "./components/TreeItem";
+import { deleteNode, fetchTree, renameNode } from "./utils/utils";
+import { Modal } from "./components/UI/Modal/";
+
+//const GlobalContext = createContext({ showModal: false });
 
 function App() {
+  const [tree, setTree] = useState<TreeItemType>();
+  const [changedNodeName, setChangedNodeName] = useState("");
+  const [deleteNodeID, setDeleteNodeID] = useState(1);
+  const [renameNodeID, setRenameNodeID] = useState(17340);
+  const [showModal, setShowModal] = useState(false);
+  const [modalProps, setModalProps] = useState({ type: "add", id: 17298 });
+
+  function renderTree() {
+    if (tree?.children) {
+      return (
+        <TreeItem
+          key={tree.id}
+          id={tree.id}
+          name={tree.name}
+          children={tree.children}
+          modalHandler={modalHandler}
+        />
+      );
+    }
+    return <span>There is no Tree</span>;
+  }
+  function modalHandler(type: string, id: number) {
+    setModalProps({ type: type, id: id });
+    setShowModal(true);
+  }
+  useEffect(() => {
+    if (showModal === false) {
+      const response = fetchTree("test__tree");
+      response.then((data) => setTree(data));
+    }
+  }, [showModal]);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Modal
+        visible={showModal}
+        setVisible={setShowModal}
+        modalProps={modalProps}
+        fetchTree={fetchTree}
+      />
+      <input
+        type="number"
+        name="deleteNode"
+        id=""
+        value={deleteNodeID}
+        onChange={(e) => setDeleteNodeID(+e.target.value)}
+        placeholder="Enter delete node ID"
+      />
+      <button
+        onClick={() => {
+          deleteNode("test__tree", deleteNodeID)
+            .then(() => fetchTree("test__tree"))
+            .then((data) => setTree(data));
+          setDeleteNodeID(0);
+        }}
+      >
+        Delete node with ID {deleteNodeID}
+      </button>
+      <input
+        type="text"
+        name="changeNode"
+        id=""
+        value={changedNodeName}
+        onChange={(e) => setChangedNodeName(e.target.value)}
+        placeholder="Enter new name"
+      />
+      <button
+        onClick={() => {
+          renameNode("test__tree", renameNodeID, changedNodeName)
+            .then(() => fetchTree("test__tree"))
+            .then((data) => setTree(data));
+          setChangedNodeName("");
+        }}
+      >
+        Rename node with ID {renameNodeID}
+      </button>
+      <div className="App__treeWrapper">{renderTree()}</div>
     </div>
   );
 }
