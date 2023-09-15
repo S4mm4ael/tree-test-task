@@ -16,15 +16,15 @@ export function Modal({
   modalProps,
   fetchTree,
 }: ModalType) {
-  const [name, setName] = useState("");
+  const [name, setName] = useState(modalProps.currentName);
   const classes = [styles.ModalRegular];
   if (visible) {
     classes.push(styles.ModalRegular_active);
   }
 
   useEffect(() => {
-    console.log(modalProps);
-  }, [handleFromSubmission]);
+    setName(modalProps.currentName);
+  }, [modalProps.currentName]);
 
   function handleFromSubmission() {
     if (modalProps.type === "add") {
@@ -58,9 +58,7 @@ export function Modal({
           {modalProps.type === "rename" && (
             <RenameNodeForm value={name} setValue={setName} />
           )}
-          {modalProps.type === "delete" && (
-            <DeleteNodeForm name={modalProps.currentName} />
-          )}
+          {modalProps.type === "delete" && <DeleteNodeForm name={name} />}
         </div>
         <div className={styles.ModalRegular__footer}>
           <button
