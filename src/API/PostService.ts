@@ -11,7 +11,6 @@ export default class PostService {
           treeName: treeName,
         },
       });
-      console.log("Get tree", response.data);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -31,7 +30,6 @@ export default class PostService {
           nodeName: nodeName,
         },
       });
-      console.log("Create node");
       return response;
     } catch (error) {
       console.log(error);
@@ -46,11 +44,10 @@ export default class PostService {
           nodeId: nodeId,
         },
       });
-      console.log("deleteTreeNode");
       return response;
     } catch (error) {
       console.log(error);
-      return false;
+      return Promise.reject(error);
     }
   }
   static async renameTreeNode(
@@ -67,8 +64,6 @@ export default class PostService {
           newNodeName: newNodeName,
         },
       });
-      console.log("renameTreeNode");
-      console.log("test__tree", nodeId, newNodeName);
       return response;
     } catch (error) {
       console.log(error);

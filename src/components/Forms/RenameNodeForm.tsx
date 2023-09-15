@@ -9,7 +9,7 @@ export function RenameNodeForm({
   setValue: React.Dispatch<React.SetStateAction<string>>;
 }) {
   return (
-    <form className={styles.Form}>
+    <form className={styles.Form} onSubmit={(e) => e.preventDefault()}>
       <input
         type="text"
         className={styles.Form__input}

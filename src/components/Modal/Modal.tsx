@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { CreateNodeForm, DeleteNodeForm, RenameNodeForm } from "../Forms";
 import styles from "./styles.module.css";
-import { createNode, deleteNode } from "../../utils/utils";
+import { createNode, deleteNode, renameNode } from "../../utils/utils";
 
 type ModalType = {
   visible: boolean;
@@ -28,16 +28,21 @@ export function Modal({
 
   function handleFromSubmission() {
     if (modalProps.type === "add") {
-      createNode("test__tree", modalProps.id, name);
+      createNode("test__tree", modalProps.id, "");
+      setVisible(false);
     }
     if (modalProps.type === "rename") {
-      createNode("test__tree", modalProps.id, name);
+      renameNode("test__tree", modalProps.id, name);
+      setVisible(false);
     }
     if (modalProps.type === "delete") {
-      deleteNode("test__tree", modalProps.id);
+      deleteNode("test__tree", modalProps.id).catch(() => {
+        console.log("Bad request");
+        setVisible(true);
+      });
+      setVisible(false);
     }
     fetchTree("test__tree").finally(() => {
-      setVisible(false);
       setName("");
     });
   }
