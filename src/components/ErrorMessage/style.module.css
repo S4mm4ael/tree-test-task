@@ -1,0 +1,45 @@
+.ErrorMessage {
+  display: none;
+  position: absolute;
+  top: 1%;
+  right: 0;
+  left: 0;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+  border-radius: 8px;
+  background: #d7e5ff;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 17px;
+  color: #153155;
+}
+
+.ErrorMessage_btn {
+  all: unset;
+  justify-content: center;
+  width: 1.5em;
+  height: 1.5em;
+  text-align: center;
+  transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: .3s;
+}
+
+.ErrorMessage_btn svg {
+  fill: #3f51b5;
+}
+
+.ErrorMessage_btn:hover {
+  background-color: rgba(100, 148, 237, 0.375);
+}
+
+.ErrorMessage_active {
+
+  display: flex;
+}
