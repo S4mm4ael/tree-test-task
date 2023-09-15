@@ -99,3 +99,9 @@
   background-color: #303e8a;
 
 }
+
+.ModalRegular__btn_delete {
+  background-color: #ffffff;
+  color: red;
+  border: 1px solid red;
+}
