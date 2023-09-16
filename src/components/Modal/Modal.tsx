@@ -3,6 +3,7 @@ import { CreateNodeForm, DeleteNodeForm, RenameNodeForm } from "../Forms";
 import styles from "./styles.module.css";
 import { createNode, deleteNode, renameNode } from "../../utils/utils";
 import { ModalType } from "../../Types/ModalType.type";
+import { Spinner } from "../Spinner";
 
 export function Modal({
   visible,
@@ -13,6 +14,7 @@ export function Modal({
   setErrorMessage,
 }: ModalType) {
   const [name, setName] = useState(modalProps.currentName);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setName(modalProps.currentName);
@@ -20,12 +22,18 @@ export function Modal({
 
   function handleFormSubmission() {
     if (modalProps.type === "add") {
-      createNode("test__tree", modalProps.id, name);
-      setVisible(false);
+      setIsLoading(true);
+      createNode("test__tree", modalProps.id, name).finally(() => {
+        setVisible(false);
+        setIsLoading(false);
+      });
     }
     if (modalProps.type === "rename") {
-      renameNode("test__tree", modalProps.id, name);
-      setVisible(false);
+      setIsLoading(true);
+      renameNode("test__tree", modalProps.id, name).finally(() => {
+        setVisible(false);
+        setIsLoading(false);
+      });
     }
     if (modalProps.type === "delete") {
       deleteNode("test__tree", modalProps.id)
@@ -36,6 +44,9 @@ export function Modal({
             show: true,
           });
           setVisible(true);
+        })
+        .finally(() => {
+          setIsLoading(false);
         });
     }
     fetchTree("test__tree").finally(() => {
@@ -57,18 +68,23 @@ export function Modal({
         <div className={styles.ModalRegular__header}>
           <h6>{modalProps.type}</h6>
         </div>
-        <div className={styles.ModalRegular__form}>
-          {modalProps.type === "add" && (
-            <CreateNodeForm value={name} setValue={setName} />
-          )}
-          {modalProps.type === "rename" && (
-            <RenameNodeForm value={name} setValue={setName} />
-          )}
-          {modalProps.type === "delete" && !errorMessage.message && (
-            <DeleteNodeForm name={name} />
-          )}
-          {errorMessage.message && <span>{errorMessage.message}</span>}
-        </div>
+        {isLoading ? (
+          <Spinner />
+        ) : (
+          <div className={styles.ModalRegular__form}>
+            {modalProps.type === "add" && (
+              <CreateNodeForm value={name} setValue={setName} />
+            )}
+            {modalProps.type === "rename" && (
+              <RenameNodeForm value={name} setValue={setName} />
+            )}
+            {modalProps.type === "delete" && !errorMessage.message && (
+              <DeleteNodeForm name={name} />
+            )}
+            {errorMessage.message && <span>{errorMessage.message}</span>}
+          </div>
+        )}
+
         <div className={styles.ModalRegular__footer}>
           {errorMessage.message ? (
             <button
