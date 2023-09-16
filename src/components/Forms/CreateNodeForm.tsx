@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styles from "./styles.module.css";
 
 export function CreateNodeForm({
@@ -8,10 +8,6 @@ export function CreateNodeForm({
   value: string;
   setValue: React.Dispatch<React.SetStateAction<string>>;
 }) {
-  useEffect(() => {
-    setValue("");
-  }, []);
-
   return (
     <form className={styles.Form} onSubmit={(e) => e.preventDefault()}>
       <input

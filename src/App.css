@@ -1,10 +1,12 @@
 .App {
+  font-size: 1.1rem;
   text-align: center;
   display: flex;
   flex-direction: column;
   gap: 20px;
   width: 800px;
   margin: 0 auto;
+
 }
 
 .App__treeWrapper {
