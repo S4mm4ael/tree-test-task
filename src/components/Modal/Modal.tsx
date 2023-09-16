@@ -56,22 +56,20 @@ export function Modal({
 
   return (
     <div
-      className={` ${styles.ModalRegular} ${
-        visible ? styles.ModalRegular_active : ""
-      }`}
+      className={` ${styles.Modal} ${visible ? styles.Modal_active : ""}`}
       onClick={() => setVisible(false)}
     >
       <div
-        className={styles.ModalRegular__content}
+        className={styles.Modal__content}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className={styles.ModalRegular__header}>
+        <div className={styles.Modal__header}>
           <h6>{modalProps.type}</h6>
         </div>
         {isLoading ? (
           <Spinner />
         ) : (
-          <div className={styles.ModalRegular__form}>
+          <div className={styles.Modal__form}>
             {modalProps.type === "add" && (
               <CreateNodeForm value={name} setValue={setName} />
             )}
@@ -85,7 +83,7 @@ export function Modal({
           </div>
         )}
 
-        <div className={styles.ModalRegular__footer}>
+        <div className={styles.Modal__footer}>
           {errorMessage.message ? (
             <button
               onClick={() => {
@@ -95,7 +93,7 @@ export function Modal({
                   show: true,
                 });
               }}
-              className={styles.ModalRegular__btn}
+              className={styles.Modal__btn}
               style={{ width: "100%" }}
             >
               CLOSE
@@ -104,16 +102,16 @@ export function Modal({
             <>
               <button
                 onClick={() => setVisible(false)}
-                className={styles.ModalRegular__btn}
+                className={styles.Modal__btn}
               >
                 CANCEL
               </button>
               <button
                 onClick={handleFormSubmission}
-                className={`${styles.ModalRegular__btn} ${
+                className={`${styles.Modal__btn} ${
                   modalProps.type === "delete"
-                    ? styles.ModalRegular__btn_delete
-                    : styles.ModalRegular__btn_submit
+                    ? styles.Modal__btn_delete
+                    : styles.Modal__btn_submit
                 } `}
               >
                 {modalProps.type.toUpperCase()}
