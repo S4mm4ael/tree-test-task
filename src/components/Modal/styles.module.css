@@ -105,3 +105,25 @@
   color: red;
   border: 1px solid red;
 }
+
+@media only screen and (max-width: 600px) {
+  .Modal {
+    width: 100vh;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+
+  .Modal__form {
+    border-top: 0px solid rgba(0, 0, 0, 0.12);
+    border-bottom: 0px solid rgba(0, 0, 0, 0.12);
+
+  }
+
+  .Modal__content,
+  .Modal__header,
+  .Modal__footer,
+  .Modal__form,
+  .Modal h6 {
+    width: 300px;
+  }
+}

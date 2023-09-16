@@ -10,3 +10,10 @@
 .Form__input:hover {
   border: 1px solid black;
 }
+
+@media only screen and (max-width: 600px) {
+  .Form__input {
+    padding: 5px;
+    width: 300px;
+  }
+}
