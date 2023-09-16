@@ -2,17 +2,7 @@ import { useEffect, useState } from "react";
 import { CreateNodeForm, DeleteNodeForm, RenameNodeForm } from "../Forms";
 import styles from "./styles.module.css";
 import { createNode, deleteNode, renameNode } from "../../utils/utils";
-
-type ModalType = {
-  visible: boolean;
-  setVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  modalProps: { type: string; id: number; currentName: string };
-  fetchTree: (treeName: string) => Promise<any>;
-  errorMessage: { message: string; show: boolean };
-  setErrorMessage: React.Dispatch<
-    React.SetStateAction<{ message: string; show: boolean }>
-  >;
-};
+import { ModalType } from "../../Types/ModalType.type";
 
 export function Modal({
   visible,
