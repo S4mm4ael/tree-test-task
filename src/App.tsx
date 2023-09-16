@@ -54,6 +54,7 @@ function App() {
   }
 
   useEffect(() => {
+    console.log("tree download");
     const response = fetchTree("test__tree");
     response.then((data) => setTree(data));
   }, [showModal]);

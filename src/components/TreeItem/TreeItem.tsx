@@ -15,9 +15,20 @@ export function TreeItem({ id, name, children, modalHandler }: TreeItemType) {
         Name: <b>{name} </b>
         ID: <b>{id}</b>
         <button onClick={handleTreeShowing}>Show</button>
-        <button onClick={() => modalHandler("add", id, name)}>add</button>
-        <button onClick={() => modalHandler("rename", id, name)}>rename</button>
-        <button onClick={() => modalHandler("delete", id, name)}>delete</button>
+        <button onClick={() => modalHandler("add", id, "")}>add</button>
+        {id === 17298 ? (
+          ""
+        ) : (
+          <>
+            {" "}
+            <button onClick={() => modalHandler("rename", id, name)}>
+              rename
+            </button>
+            <button onClick={() => modalHandler("delete", id, name)}>
+              delete
+            </button>
+          </>
+        )}
       </div>
 
       {children &&

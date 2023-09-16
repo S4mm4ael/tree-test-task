@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { CreateNodeForm, DeleteNodeForm, RenameNodeForm } from "../Forms";
 import styles from "./styles.module.css";
 import { createNode, deleteNode, renameNode } from "../../utils/utils";
-import { ErrorMessage } from "../ErrorMessage";
 
 type ModalType = {
   visible: boolean;
@@ -29,9 +28,9 @@ export function Modal({
     setName(modalProps.currentName);
   }, [modalProps.currentName]);
 
-  function handleFromSubmission() {
+  function handleFormSubmission() {
     if (modalProps.type === "add") {
-      createNode("test__tree", modalProps.id, "");
+      createNode("test__tree", modalProps.id, name);
       setVisible(false);
     }
     if (modalProps.type === "rename") {
@@ -75,7 +74,7 @@ export function Modal({
           {modalProps.type === "rename" && (
             <RenameNodeForm value={name} setValue={setName} />
           )}
-          {modalProps.type === "delete" && !errorMessage.show && (
+          {modalProps.type === "delete" && !errorMessage.message && (
             <DeleteNodeForm name={name} />
           )}
           {errorMessage.message && <span>{errorMessage.message}</span>}
@@ -104,7 +103,7 @@ export function Modal({
                 CANCEL
               </button>
               <button
-                onClick={handleFromSubmission}
+                onClick={handleFormSubmission}
                 className={`${styles.ModalRegular__btn} ${
                   modalProps.type === "delete"
                     ? styles.ModalRegular__btn_delete
