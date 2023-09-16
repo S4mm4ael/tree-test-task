@@ -6,6 +6,7 @@ import { fetchTree } from "./utils/utils";
 import { Modal } from "./components/Modal/";
 import { useStateWithCallbackLazy } from "use-state-with-callback";
 import { ErrorMessage } from "./components/ErrorMessage";
+import { Footer } from "./components/Footer";
 
 type modalPropsType = {
   type: string;
@@ -70,6 +71,7 @@ function App() {
         setErrorMessage={setErrorMessage}
       />
       <div className="App__treeWrapper">{renderTree()}</div>
+      <Footer />
     </div>
   );
 }

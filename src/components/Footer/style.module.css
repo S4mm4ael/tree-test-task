@@ -1,0 +1,11 @@
+.About__logo {
+  cursor: pointer;
+  height: 30px;
+  width: 30px;
+  margin: 0 auto;
+  transition: 0.3s;
+}
+
+.About__logo:hover {
+  transform: scale(1.1);
+}
