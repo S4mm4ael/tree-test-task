@@ -1,6 +1,6 @@
 import PostService from "../API/PostService";
 
-export function fetchTree(treeName: string) {
+export function fetchTree() {
   const treeData = PostService.getTree("test__tree");
   return treeData;
 }

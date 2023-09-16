@@ -55,9 +55,9 @@ function App() {
 
   useEffect(() => {
     console.log("tree download");
-    const response = fetchTree("test__tree");
+    const response = fetchTree();
     response.then((data) => setTree(data));
-  }, [showModal]);
+  }, [showModal, fetchTree]);
 
   return (
     <div className="App">
